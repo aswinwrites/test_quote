@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Inspo Board</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-size: cover;
+      background-position: center;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      backdrop-filter: brightness(0.6);
+    }
+    #quote {
+      font-size: 2em;
+      max-width: 70%;
+      margin-bottom: 20px;
+    }
+    #author {
+      font-size: 1.2em;
+      font-style: italic;
+    }
+    button {
+      margin-top: 40px;
+      padding: 10px 20px;
+      border: none;
+      font-size: 1em;
+      border-radius: 10px;
+      cursor: pointer;
+      background: rgba(255,255,255,0.2);
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div id="quote">Loading...</div>
+  <div id="author"></div>
+  <button onclick="loadInspo()">New Inspo</button>
+
+  <script>
+    async function loadInspo() {
+      // Random nature photo from Unsplash
+      const imgUrl = `https://source.unsplash.com/1600x900/?nature,landscape`;
+      document.body.style.backgroundImage = `url('${imgUrl}')`;
+
+      // Get quote
+      const res = await fetch('https://api.quotable.io/random');
+      const data = await res.json();
+      document.getElementById('quote').innerText = `"${data.content}"`;
+      document.getElementById('author').innerText = `— ${data.author}`;
+    }
+
+    loadInspo(); // initial load
+  </script>
+</body>
+</html>
